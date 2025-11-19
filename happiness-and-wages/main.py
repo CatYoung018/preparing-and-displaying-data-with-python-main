@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 # Standardizes currency to USD values so that we can better compare results
 def format_currency(dataset):
@@ -7,7 +8,7 @@ def format_currency(dataset):
   # Requests data from API
   response = requests.get(url)
   data = response.json()
-  
+
   def convert_currency(row):
     rate = data["rates"][row["Unit Code"]]
     return row["Value"] / rate
@@ -19,3 +20,12 @@ def format_currency(dataset):
 
 
 # ADD CODE: Pandas dataframes
+wage = pd.read_csv("wage.csv", delimiter=",")
+happiness = pd.read_csv("happiness.csv", delimiter=",")
+wage_usd = format_currency(wage)
+wage_and_happiness = wage.merge(happiness)
+
+print(wage)
+print(happiness)
+print(wage_usd)
+print(wage_and_happiness) 

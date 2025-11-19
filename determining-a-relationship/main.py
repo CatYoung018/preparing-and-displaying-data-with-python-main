@@ -32,3 +32,21 @@ print(wage_usd)
 wage_and_happiness = wage.merge(happiness)
 print(wage_and_happiness)
 
+wage_and_happiness_by_country = wage_and_happiness.groupby("Country")
+wage_average_per_country = wage_and_happiness_by_country["Value"].mean()
+happiness_average_per_country = wage_and_happiness_by_country["Happiness score"].mean()
+
+print("Countries with the highest average wages:",
+      wage_average_per_country.nlargest(10))
+print("Countries with the highest average happiness:",
+      happiness_average_per_country.nlargest(10))
+print("Countries with the lowest average wages:",
+      wage_average_per_country.nsmallest(10))
+print("Countries with the lowest average happiness:",
+      happiness_average_per_country.nsmallest(10))
+
+# With f-strings:
+print(f"Countries with the highest average wages:{wage_average_per_country.nlargest(10)}")
+print(f"Countries with the highest average happiness:{happiness_average_per_country.nlargest(10)}")
+print(f"Countries with the lowest average wages:{wage_average_per_country.nsmallest(10)}")
+print(f"Countries with the lowest average happiness:{happiness_average_per_country.nsmallest(10)}")

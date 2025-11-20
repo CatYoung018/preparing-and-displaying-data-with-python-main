@@ -1,9 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
+import json 
 
+# We define a 'User-Agent' so Wikipedia thinks we are a browser, not a bot.
+headers = {
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+
+# We add 'headers=headers' to the request
+honey_badger = requests
 
 def get_soup(url):
-  r = requests.get(url)
+  r = requests.get(url, headers=headers)
   r.raise_for_status()
   html = r.text.encode("utf-8")
   soup = BeautifulSoup(html, "html.parser")
@@ -39,10 +47,21 @@ category_data = get_categories("https://skillcrush.github.io/web-scraping-endang
 
 # print(animal_class)
 
+collected_data = []
+
 for category in category_data:
   for animal in category_data[category]:
     animal_href = animal["href"]
-    # print(animal_href)
+    animal_name = animal.contents[0]
     animal_class = get_animal(animal_href)
-    print(animal_class)
-    print()
+    if len(animal_name) > 3:
+      collected_data.append({
+        "Category":category,
+        "Animal Name":animal_name,
+        "Animal Class":animal_class
+      })
+
+with open("data.json", "w") as json.file:
+  json.dump(collected_data, json.file)
+
+

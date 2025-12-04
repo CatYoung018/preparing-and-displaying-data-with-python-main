@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endangered Species Tracker - Web Scraping Portfolio Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>🐾 Endangered Species Tracker</h1>
+            <p class="subtitle">The Web Scraper</p>
+        </header>
+        
+        <nav class="controls" aria-label="Data controls">
+            <button id="scrapeBtn" type="button" aria-label="Scrape fresh data from source">
+                Scrape Fresh Data
+            </button>
+            <button id="loadBtn" type="button" aria-label="Load previously cached data">
+                Load Cached Data
+            </button>
+        </nav>
+        
+        <div id="stats" class="stats" style="display: none;" role="status" aria-live="polite">
+            <div class="stat">
+                <div class="stat-number" id="totalAnimals" aria-label="Total species count">0</div>
+                <div class="stat-label">Total Species</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="totalCategories" aria-label="Total categories count">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+        
+        <div id="loading" style="display: none;" class="loading" role="status" aria-live="assertive">
+            <p>Scraping data... This may take a minute ⏳</p>
+        </div>
+        
+        <section id="results" aria-label="Endangered species results"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

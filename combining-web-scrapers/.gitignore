@@ -1,3 +1,20 @@
-venv
+# Virtual Environment
+venv/
+env/
+*.pyc
+__pycache__/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Data cache
+endangered_species.json
+
+# Python
+*.py[cod]
+*$py.class

@@ -6,7 +6,7 @@ A full-stack web application that scrapes endangered species data from the web a
 
 This project demonstrates full-stack development skills by combining Python web scraping with a modern frontend interface. The application scrapes endangered species data, classifies each animal by retrieving information from Wikipedia, and presents the data in an intuitive, accessible web interface.
 
-**Built as a portfolio project for [Your Bootcamp Name] Full-Stack Development Program**
+**Built as a portfolio project for Skillcrush Full Stack Development Program**
 
 ## ✨ Features
 

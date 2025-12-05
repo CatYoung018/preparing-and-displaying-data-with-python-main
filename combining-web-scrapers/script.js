@@ -1,3 +1,6 @@
+// Use relative URLs since frontend and backend are on same domain
+const API_BASE_URL = '';  // Empty string means same domain
+
 // Event listeners for buttons 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('scrapeBtn').addEventListener('click', scrapeData);
@@ -21,7 +24,7 @@ async function scrapeData() {
     results.innerHTML = '';
     
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/scrape');
+        const response = await fetch(`/api/scrape`);
         const data = await response.json();
         displayData(data);
         

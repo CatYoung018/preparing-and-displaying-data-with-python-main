@@ -1,10 +1,13 @@
-// Event listeners for buttons (better than onclick in HTML)
+// Event listeners for buttons 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('scrapeBtn').addEventListener('click', scrapeData);
     document.getElementById('loadBtn').addEventListener('click', loadData);
     
     // Auto-load cached data on page load
     loadData();
+    
+    // Back to Top Button Setup
+    setupBackToTop();
 });
 
 async function scrapeData() {
@@ -120,32 +123,34 @@ function escapeHtml(text) {
 }
 
 // Back to Top Button Functionality
-const backToTopButton = document.getElementById('backToTop');
-
-// Show/hide button based on scroll position
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopButton.classList.add('show');
-    } else {
-        backToTopButton.classList.remove('show');
-    }
-});
-
-// Scroll to top when clicked
-backToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+function setupBackToTop() {
+    const backToTopButton = document.getElementById('backToTop');
+    
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
     });
     
-    // Announce to screen readers
-    announceToScreenReader('Scrolled to top of page');
-});
-
-// Keyboard support (Enter or Space)
-backToTopButton.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        backToTopButton.click();
-    }
-});
+    // Scroll to top when clicked
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Announce to screen readers
+        announceToScreenReader('Scrolled to top of page');
+    });
+    
+    // Keyboard support (Enter or Space)
+    backToTopButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            backToTopButton.click();
+        }
+    });
+}

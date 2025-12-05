@@ -2,8 +2,10 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
-import json  # YOU NEED THIS!
+import json  
 
+# 1. WSGI FIX: We must ensure the Flask app is named 'application' in the WSGI file,
+# but using 'app' here is fine as long as the WSGI file imports it correctly.
 app = Flask(__name__)
 CORS(app)
 
@@ -40,21 +42,42 @@ def get_animal_class(url):
       return "Unknown"
     rows = table.find_all("tr")
     for row in rows:
-      if "Class:" in row.get_text():
-        animal_class = row.find("a").contents[0]
-        return animal_class
+      # Check both 'Class' and 'Classis' (Latin) for robustness
+      if "Class:" in row.get_text() or "Classis:" in row.get_text():
+        # Find the first link within the data cell, assuming the class name is a link
+        link = row.find('td').find('a')
+        if link and link.contents:
+            return link.contents[0].strip()
+        return "Unknown"
     return "Unknown"
   except Exception as e:
+    # Log the error for debugging purposes
+    print(f"Error fetching animal class for URL {url}: {e}")
     return "Error"
+
+# 2. FIX: ADD A ROOT ROUTE TO RESOLVE THE 404 ERROR
+@app.route('/', methods=['GET'])
+def index():
+    """A simple root route to confirm the application is running."""
+    return jsonify({
+        "status": "ok",
+        "message": "Welcome to the Endangered Species API!",
+        "endpoints": {
+            "scrape": "/api/scrape",
+            "data": "/api/data"
+        }
+    })
 
 @app.route('/api/scrape', methods=['GET'])
 def scrape_data():
   """Scrape all data and return it"""
+  # NOTE: The scraping will hit external websites which may be slow or blocked.
+  # If you see 502/504 errors again, it may be due to a timeout.
   category_data = get_categories(
     "https://skillcrush.github.io/web-scraping-endangered-species/"
   )
   
-  # THESE LINES MUST BE INDENTED - they're inside the function!
+  # Ensure the JSON file can be written now that you have paid for more space.
   for category in category_data:
     for animal in category_data[category]:
       animal['class'] = get_animal_class(animal['url'])
@@ -74,5 +97,6 @@ def get_data():
   except FileNotFoundError:
     return jsonify({"error": "No data available. Call /api/scrape first"}), 404
 
-if __name__ == '__main__':
-  app.run(debug=True, port=5000)
+# 3. FIX: REMOVE THE app.run() CALL! PythonAnywhere handles the server process.
+# if __name__ == '__main__':
+#   app.run(debug=True, port=5000)

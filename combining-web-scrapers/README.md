@@ -2,11 +2,29 @@
 
 A full-stack web application that scrapes endangered species data from the web and displays it in an accessible, responsive interface.
 
+**Built as a portfolio project for Skillcrush Full-Stack Development Program**
+
+## 🌐 Live Demo
+
+**[View Live Site](https://cyoun002.pythonanywhere.com)** ⬅️ Click to see it in action!
+
+*Note: Backend may take a moment on first load as data is scraped from Wikipedia.*
+
+---
+
 ## 📋 Project Overview
 
 This project demonstrates full-stack development skills by combining Python web scraping with a modern frontend interface. The application scrapes endangered species data, classifies each animal by retrieving information from Wikipedia, and presents the data in an intuitive, accessible web interface.
 
 **Built as a portfolio project for Skillcrush Full Stack Development Program**
+
+## 🎬 Demo
+
+![Endangered Species Tracker Demo](Endangered.gif)
+
+*The application automatically loads endangered species data and displays it in an intuitive, accessible interface with search functionality and detailed animal classifications.*
+
+---
 
 ## ✨ Features
 

@@ -3,8 +3,19 @@ const API_BASE_URL = '';  // Empty string means same domain
 
 // Event listeners for buttons 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('scrapeBtn').addEventListener('click', scrapeData);
-    document.getElementById('loadBtn').addEventListener('click', loadData);
+    const scrapeBtn = document.getElementById('scrapeBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    
+    // Only show scrape button on localhost (development)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        scrapeBtn.style.display = 'inline-block';
+        scrapeBtn.addEventListener('click', scrapeData);
+    } else {
+        // Hide scrape button in production
+        scrapeBtn.style.display = 'none';
+    }
+    
+    loadBtn.addEventListener('click', loadData);
     
     // Auto-load cached data on page load
     loadData();

@@ -2,11 +2,6 @@
 
 // Event listeners for buttons 
 document.addEventListener('DOMContentLoaded', () => {
-    const loadBtn = document.getElementById('loadBtn');
-    
-    // 1. Hide the scrape button (Handled by CSS/HTML now, so we remove the JS logic)
-    // 2. Attach click listener to load button
-    loadBtn.addEventListener('click', loadData);
     
     // 3. Auto-load cached data on page load
     loadData();

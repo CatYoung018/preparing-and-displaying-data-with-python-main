@@ -26,17 +26,21 @@ def get_categories(url):
   data = {}
   categories = soup.find_all("dl")
   for category in categories:
-    category_name = category.find("dt").get_text()
+    category_name = category.find("dt").get_text().strip()
     category_animals = category.find_all("a")
     data[category_name] = [
-      {"name": animal.get_text(), "url": animal["href"]} 
-      for animal in category_animals
+      {"name": animal.get_text().strip(), "url": animal.get("href")
+      } 
+      for animal in category_animals if animal.get("href")
     ]
   return data
 
-def get_animal_class(url):
+WIKIPEDIA_BASE_URL = "https://en.wikipedia.org"
+
+def get_animal_class(relative_url):
   try:
-    soup = get_soup(url)
+    full_url = WIKIPEDIA_BASE_URL + relative_url
+    soup = get_soup(full_url)
     table = soup.find("table", {"class": "infobox biota"})
     if not table:
       return "Unknown"
@@ -46,13 +50,12 @@ def get_animal_class(url):
       if "Class:" in row.get_text() or "Classis:" in row.get_text():
         # Find the first link within the data cell, assuming the class name is a link
         link = row.find('td').find('a')
-        if link and link.contents:
-            return link.contents[0].strip()
-        return "Unknown"
+        if link:
+            return link.get_text().strip()
     return "Unknown"
   except Exception as e:
     # Log the error for debugging purposes
-    print(f"Error fetching animal class for URL {url}: {e}")
+    print(f"Error fetching animal class for URL {full_url}: {e}")
     return "Error"
 
 # 2. FIX: ADD A ROOT ROUTE TO RESOLVE THE 404 ERROR

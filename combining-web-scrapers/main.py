@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
@@ -59,17 +59,16 @@ def get_animal_class(relative_url):
     return "Error"
 
 # 2. FIX: ADD A ROOT ROUTE TO RESOLVE THE 404 ERROR
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
-    """A simple root route to confirm the application is running."""
-    return jsonify({
-        "status": "ok",
-        "message": "Welcome to the Endangered Species API!",
-        "endpoints": {
-            "scrape": "/api/scrape",
-            "data": "/api/data"
-        }
-    })
+    """Serves the main HTML file."""
+    # Assumes your main.py is in the same directory as index.html
+    return send_from_directory('.', 'index.html')
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    """Serves all other static files (CSS, JS, images, etc.)."""
+    return send_from_directory('.', filename)
 
 @app.route('/api/scrape', methods=['GET'])
 def scrape_data():

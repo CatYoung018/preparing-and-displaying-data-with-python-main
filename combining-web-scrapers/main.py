@@ -1,6 +1,10 @@
-from flask import Flask, jsonify, send_from_directory
+# main.py
+from flask import Flask, jsonify, send_from_directory, current_app 
+#                                                       ^^^^^^^^^^^^^ ADD
 from flask_cors import CORS
 import requests
+import os # ADD
+# ...from flask import Flask, jsonify, send_from_directory
 from bs4 import BeautifulSoup
 import json  
 
@@ -59,25 +63,30 @@ def get_animal_class(relative_url):
     return "Error"
 
 # 2. FIX: ADD A ROOT ROUTE TO RESOLVE THE 404 ERROR
+# main.py (Final, robust static routes)
 @app.route('/')
 def index():
-    """Serves the main HTML file."""
-    # Assumes your main.py is in the same directory as index.html
-    return send_from_directory('.', 'index.html')
+    """Serves the main HTML file from the application root."""
+    # Use current_app.root_path to find the index.html safely
+    return send_from_directory(current_app.root_path, 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
-    """Serves all other static files (CSS, JS, images, etc.)."""
-    return send_from_directory('.', filename)
+    """Serves all other static files (CSS, JS, images) from the application root."""
+    # This covers styles.css and script.js
+    return send_from_directory(current_app.root_path, filename)
 
-@app.route('/api/scrape', methods=['GET'])
-def scrape_data():
-  """Scrape all data and return it"""
-  # NOTE: The scraping will hit external websites which may be slow or blocked.
-  # If you see 502/504 errors again, it may be due to a timeout.
-  category_data = get_categories(
-    "https://skillcrush.github.io/web-scraping-endangered-species/"
-  )
+@app.route('/api/data', methods=['GET'])
+def get_data():
+  """Return cached data if available"""
+  try:
+    # Use absolute path to ensure the file is found
+    file_path = os.path.join(current_app.root_path, 'endangered_species.json')
+    with open(file_path, 'r') as f:
+      data = json.load(f)
+    return jsonify(data)
+  except FileNotFoundError:
+    return jsonify({"error": "No data available. Call /api/scrape first"}), 404
   
   # Ensure the JSON file can be written now that you have paid for more space.
   for category in category_data:

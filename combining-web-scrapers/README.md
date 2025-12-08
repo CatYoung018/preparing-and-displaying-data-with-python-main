@@ -1,192 +1,205 @@
 # 🐾 Endangered Species Tracker
 
-A full-stack web application that scrapes endangered species data from the web and displays it in an accessible, responsive interface.
+A full-stack web application that scrapes endangered species data and displays it in an accessible, responsive interface. Built as a portfolio project demonstrating Python backend development, web scraping, API design, and accessible frontend implementation.
 
-**Built as a portfolio project for Skillcrush Full-Stack Development Program**
-
-## 🌐 Live Demo
-
-**[View Live Site](https://cyoun002.pythonanywhere.com)** ⬅️ Click to see it in action!
-
-*Note: Backend may take a moment on first load as data is scraped from Wikipedia.*
+**[🌐 View Live Demo](https://cyoun002.pythonanywhere.com)**
 
 ---
-
-## 📋 Project Overview
-
-This project demonstrates full-stack development skills by combining Python web scraping with a modern frontend interface. The application scrapes endangered species data, classifies each animal by retrieving information from Wikipedia, and presents the data in an intuitive, accessible web interface.
-
-**Built as a portfolio project for Skillcrush Full Stack Development Program**
 
 ## 🎬 Demo
 
 ![Endangered Species Tracker Demo](Endangered.gif)
 
-*The application automatically loads endangered species data and displays it in an intuitive, accessible interface with search functionality and detailed animal classifications.*
+*Auto-loads 198 endangered species with instant display, responsive design, and full accessibility support.*
 
 ---
 
 ## ✨ Features
 
-- **Web Scraping**: Automatically scrapes endangered species data from source websites
-- **API Integration**: Fetches animal classification data from Wikipedia
-- **RESTful API**: Flask backend with JSON endpoints
-- **Responsive Design**: Mobile-friendly interface that works on all devices
-- **Accessibility First**: WCAG compliant with keyboard navigation and screen reader support
-- **Data Caching**: Stores scraped data locally for faster subsequent loads
-- **Real-time Updates**: Live scraping with loading indicators
+- **Web Scraping**: Automatically scrapes endangered species data from source website and Wikipedia
+- **Classification System**: Fetches biological classifications (Mammalia, Reptilia, etc.) from Wikipedia
+- **REST API**: Flask backend with `/api/data` and `/api/scrape` endpoints
+- **Instant Loading**: Pre-cached data for immediate display (no 3-4 minute wait)
+- **Responsive Design**: Mobile-first CSS Grid layout with breakpoints for all devices
+- **Full Accessibility**: 
+  - WCAG 2.1 AA compliant
+  - Screen reader support with ARIA labels
+  - Keyboard navigation (Tab, Enter, Space)
+  - Focus indicators and live regions
+  - Reduced motion support
+  - High contrast mode compatible
+- **Back-to-Top Button**: Smooth scroll navigation with accessibility features
+- **Professional UI**: Purple gradient design with hover effects and animations
+
+---
 
 ## 🛠️ Tech Stack
 
-### Backend
-- **Python 3.x**
-- **Flask** - Web framework
-- **BeautifulSoup4** - Web scraping
-- **Requests** - HTTP library
-- **Flask-CORS** - Cross-origin resource sharing
+**Backend:**
+- Python 3.10
+- Flask (web framework)
+- Flask-CORS (API access)
+- BeautifulSoup4 (web scraping)
+- Requests (HTTP library)
 
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with Grid and Flexbox
-- **JavaScript (ES6+)** - Async/await, Fetch API
-- **Accessible Design** - ARIA labels, keyboard navigation
+**Frontend:**
+- HTML5 (semantic markup)
+- CSS3 (Grid, Flexbox, media queries)
+- Vanilla JavaScript (ES6+)
+- Fetch API (async data loading)
 
-## 📦 Installation
+**Deployment:**
+- PythonAnywhere (backend hosting)
+- Git/GitHub (version control)
+
+---
+## 📊 Data
+
+- **198 endangered species** across 7 categories
+- **Critically Endangered, Endangered, Vulnerable** classification levels
+- **Biological classifications** (Mammalia, Reptilia, Aves, etc.)
+- **Direct Wikipedia links** for each species
+
+---
+
+## 🚀 Local Development Setup
 
 ### Prerequisites
-- Python 3.7 or higher
-- pip (Python package manager)
+- Python 3.10+
+- Git
 
-### Setup Steps
+### Installation
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/endangered-species-tracker.git
-   cd endangered-species-tracker
+git clone https://github.com/CatYoung018/preparing-and-displaying-data-with-python-main.git
+cd preparing-and-displaying-data-with-python-main/combining-web-scrapers
 ```
 
-2. **Create a virtual environment**
+2. **Create virtual environment**
 ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. **Install dependencies**
 ```bash
-   pip install flask flask-cors requests beautifulsoup4
+pip install -r requirements.txt
 ```
 
-4. **Run the Flask server**
+4. **Run the backend**
 ```bash
-   python main.py
+python main.py
 ```
-   The server will start on `http://127.0.0.1:5000`
+Backend runs on `http://127.0.0.1:5000`
 
-5. **Open the frontend**
-   - Simply open `index.html` in your web browser
-   - Or use a local server for best results
+5. **Serve the frontend** (in a separate terminal)
+```bash
+python3 -m http.server 8000
+```
+Frontend available at `http://localhost:8000`
 
-## 🚀 Usage
+6. **Visit the app**
+Open your browser to `http://localhost:8000`
 
-### API Endpoints
+---
 
-#### `GET /api/scrape`
-Scrapes fresh data from the source and returns all endangered species with their classifications.
+## 🌐 Deployment
 
-**Response:**
+**Backend:** Deployed on [PythonAnywhere](https://www.pythonanywhere.com)
+- Persistent hosting with uWSGI
+- Cached JSON data for instant loading
+- CORS enabled for API access
+
+**Why PythonAnywhere?**
+- Free tier for portfolio projects
+- Python-specific hosting (no cold starts)
+- Always-on availability
+- Perfect for bootcamp demonstrations
+
+---
+
+## 🎯 API Endpoints
+
+### `GET /api/data`
+Returns cached endangered species data
 ```json
 {
-  "Category Name": [
+  "Critically endangered(CR)": [
     {
-      "name": "Animal Name",
-      "url": "https://wikipedia.org/...",
+      "name": "addax",
+      "url": "/wiki/Addax",
       "class": "Mammalia"
     }
   ]
 }
 ```
 
-#### `GET /api/data`
-Returns cached data from the last scrape.
+### `GET /api/scrape`
+Scrapes fresh data (takes 3-4 minutes)
+- Scrapes species list from source
+- Fetches classifications from Wikipedia
+- Caches results in `endangered_species.json`
 
-**Response:** Same format as `/api/scrape`
-
-### Frontend Usage
-
-1. **Scrape Fresh Data**: Click the "Scrape Fresh Data" button to fetch new data (takes 30-60 seconds)
-2. **Load Cached Data**: Click "Load Cached Data" to instantly display previously scraped data
-3. **View Details**: Click on any animal card's Wikipedia link to learn more
-4. **Keyboard Navigation**: Use Tab key to navigate, Enter/Space to activate buttons
+---
 
 ## ♿ Accessibility Features
 
-- **Semantic HTML**: Proper use of `<main>`, `<header>`, `<nav>`, `<section>`, and `<article>` tags
-- **ARIA Labels**: Descriptive labels for screen readers
-- **Keyboard Navigation**: Full functionality without a mouse
-- **Focus Indicators**: Clear visual feedback for keyboard users
-- **Screen Reader Support**: Live regions announce dynamic content changes
-- **Color Contrast**: WCAG AA compliant contrast ratios
-- **Reduced Motion**: Respects user's motion preferences
-- **High Contrast Mode**: Enhanced visibility in accessibility modes
+This project prioritizes accessibility for all users:
+
+- **Semantic HTML5**: Proper use of `<main>`, `<header>`, `<nav>`, `<article>`, `<section>`
+- **ARIA Attributes**: `role`, `aria-label`, `aria-live`, `aria-busy` for dynamic content
+- **Keyboard Navigation**: Full site navigation without a mouse
+- **Screen Reader Support**: Announcements for dynamic content updates
+- **Focus Management**: Clear focus indicators (3px purple outline)
+- **Color Contrast**: WCAG AA compliant color ratios
+- **Motion Preferences**: Respects `prefers-reduced-motion`
+- **Touch Targets**: Minimum 44×44px tap areas (WCAG 2.5.5)
+
+---
 
 ## 📁 Project Structure
 ```
-endangered-species-tracker/
+combining-web-scrapers/
 ├── venv/                          # Virtual environment
-├── index.html                     # Main HTML file
-├── styles.css                     # Styling
-├── script.js                      # Frontend JavaScript
-├── main.py                        # Flask backend
-├── endangered_species.json        # Cached data
-├── README.md                      # Project documentation
-└── .gitignore                     # Git ignore file
+├── .gitignore                     # Git ignore rules
+├── endangered_species.json        # Cached scraped data
+├── index.html                     # Frontend structure
+├── styles.css                     # Responsive styling
+├── script.js                      # Data fetching & display
+├── main.py                        # Flask backend & scraping
+├── README.md                      # This file
+└── requirements.txt               # Python dependencies
 ```
 
-## 🔧 How It Works
+---
 
-1. **Backend Scraping**: 
-   - `get_categories()` scrapes the main endangered species page
-   - Extracts animal names and Wikipedia URLs
-   - `get_animal_class()` visits each Wikipedia page to find the animal's class
+## 🎓 Learning Outcomes
 
-2. **API Layer**:
-   - Flask serves two endpoints: `/api/scrape` and `/api/data`
-   - CORS enabled for cross-origin requests
-   - Data cached as JSON for performance
+This project demonstrates:
 
-3. **Frontend Display**:
-   - Fetches data from Flask API
-   - Dynamically generates HTML cards for each animal
-   - Displays statistics (total species, categories)
-   - Handles loading states and errors gracefully
+1. **Backend Development**: Building REST APIs with Flask
+2. **Web Scraping**: Extracting structured data from HTML
+3. **Async JavaScript**: Fetch API and promise handling
+4. **Responsive Design**: Mobile-first CSS with media queries
+5. **Accessibility**: WCAG compliance and inclusive design
+6. **Version Control**: Git workflow and GitHub collaboration
+7. **Deployment**: Production hosting configuration
+8. **Problem Solving**: Debugging CORS, timing issues, caching
 
-## 🎨 Design Decisions
+---
 
-- **Single-Page Application**: Simple, fast user experience
-- **Gradient Background**: Modern, visually appealing design
-- **Card Layout**: Easy to scan, mobile-friendly
-- **Purple Color Scheme**: Professional and memorable
-- **Grid System**: Responsive layout that adapts to screen size
+## 🔮 Future Enhancements
 
-## 🐛 Known Issues & Future Improvements
+- [ ] Search/filter functionality
+- [ ] Sort by classification or endangerment level
+- [ ] Export data to CSV
+- [ ] Species detail modal with images
+- [ ] Auto-refresh data weekly via cron job
+- [ ] PostgreSQL database integration
+- [ ] User favorites/bookmarking system
 
-- [ ] Add search/filter functionality
-- [ ] Implement database instead of JSON file
-- [ ] Add user authentication
-- [ ] Deploy to cloud platform (Heroku/AWS)
-- [ ] Add data visualization (charts/graphs)
-- [ ] Implement rate limiting for API calls
-
-## 📝 Learning Outcomes
-
-Through this project, I learned:
-- Web scraping techniques with BeautifulSoup
-- RESTful API design with Flask
-- Asynchronous JavaScript with Fetch API
-- Responsive web design principles
-- Accessibility best practices (ARIA, semantic HTML)
-- Git version control
-- Virtual environment management
+---
 
 ## 🙏 Acknowledgments
 

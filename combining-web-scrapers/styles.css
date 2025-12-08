@@ -57,7 +57,13 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.loading {
+/* Add this to styles.css */
+/* Hide the scrape button globally by default */
+#scrapeBtn {
+    display: none !important; /* Use !important if necessary to override inline/other styles */
+}
+
+.loading-spinner {
     text-align: center;
     padding: 40px;
     color: #667eea;

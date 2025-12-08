@@ -68,14 +68,14 @@ def get_animal_class(relative_url):
 # 1. SERVE STATIC FILES (FIX for PythonAnywhere loading errors)
 @app.route('/')
 def index():
-    """Serves the main HTML file from the application root."""
-    # Use current_app.root_path for robust file location
-    return send_from_directory(current_app.root_path, 'index.html')
+    """Serves the main HTML file."""
+    # 🌟 CRITICAL FIX: Use the dot '.' for the working directory (already set by WSGI)
+    return send_from_directory('.', 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
-    """Serves all other static files (CSS, JS, images) from the application root."""
-    return send_from_directory(current_app.root_path, filename)
+    """Serves all other static files (CSS, JS, images)."""
+    return send_from_directory('.', filename)
 
 
 # 2. CACHED DATA ENDPOINT (FAST LOAD)

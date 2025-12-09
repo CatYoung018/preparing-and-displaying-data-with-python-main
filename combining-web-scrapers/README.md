@@ -209,7 +209,7 @@ This project demonstrates:
 
 ## 📧 Contact
 
-**[Cat Young]**
+**Cat Young**
 - Portfolio: [catyoung018.github.io/Cat-Young-Dev](https://catyoung018.github.io/Cat-Young-Dev/)
 - LinkedIn: [linkedin.com/in/catrilliayoung](https://linkedin.com/in/catrilliayoung)
 - GitHub: [github.com/CatYoung018](https://github.com/CatYoung018)

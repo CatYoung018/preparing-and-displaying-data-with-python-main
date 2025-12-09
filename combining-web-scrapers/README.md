@@ -220,7 +220,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Created as a portfolio project for [Skillcrush] - December 2025**
+**Created as a portfolio project for Skillcrush - December 2025**
 
 ---
 
